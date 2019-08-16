@@ -1,0 +1,154 @@
+{
+  "public": {
+    "title": "PatientInsight - Accreditation Utility",
+    "theme": {
+      "showVideoBackground": false,
+      "darkroomTextEnabled": false,
+      "backgroundImagePath": "/packages/symptomatic_theming/backgrounds/Gradient-Desaturated.png",
+      "glassColor": "rgba(255, 255, 255, 1)",
+      "boxShadows": "none"
+    },
+    "home": {
+      "showUnderConstruction": false,
+      "showExperimental": false,
+      "showApps": true,      
+      "showFhirMenu": true,
+      "showRegistration": true
+    },
+    "defaults": {
+      "avatars": true,
+      "barcodes": true,
+      "hexgridMenu": false,
+      "nfcOrbital": false,
+      "notificationMenu": false,
+      "searchbarVisible": true,
+      "displayNavbars": true,
+      "disableHeader": false,
+      "disableFooter": false,
+      "darkroom": false,
+      "iFrameEnabled": false,
+      "iFrameUrl": "https://www.wikipedia.org/",
+      "paginationLimit": 100,
+      "subscriptionLimit": 1000,
+      "cards": {
+        "height": "auto",
+        "opacity": 0.95
+      },
+      "registration": {
+        "displayAccessCode": true,
+        "signInWith": false
+      },
+      "routes": {
+        "homePage": "/",
+        "landingPage": "/scorecard",
+        "adminWelcomePage": "/scorecard",
+        "adminHomePage": "/scorecard",
+        "adminDashboard": "/scorecard"
+      },
+      "header":{
+        "menuIcon": ""
+      },
+      "sidebar": {
+        "menuItems": {
+          "Index": false,
+          "Healthlog": false,
+          "GettingStarted": false,
+          "DataManagement": true,
+          "FhirResources": true,
+          "Theming": false,
+          "DynamicModules": true,
+          "AdminSidebarElements": true
+        },
+        "hidden": [
+          "/allergies",
+          "/communications",
+          "/consents",
+          "/consents",
+          "/contracts",
+          "/claims",
+          "/endpoints",
+          "/biometrics-dashboard",
+          "/body-mass-index",
+          "/imaging-studies",
+          "/immunizations",
+          "/goals",
+          "/locations",
+          "/devices",
+          "/medication-statements",
+          "/persons",
+          "/risk-assessments",
+          "/questionnaires",
+          "/subscriptions",
+          "/workqueue",
+          "/hello-world",
+          "/vitals-tracking",
+          "/example-route",
+          "/import-data",
+          "/export-data"
+        ]
+      }
+    },
+    "interfaces": {
+      "default": {
+        "status": "active",
+        "channel": {
+          "endpoint": "https://syntheticmass.mitre.org/v1/fhir"
+        },
+        "auth": {
+          "username": "iPcaA8Qg4ElaTjOlm1fkoiPdC8AGEpJ6",
+          "password": "AI1yGzOfo06Gg3ku"
+        }
+      }
+    },
+    "modules": {
+      "data": true,
+      "forum": true,
+      "genome": true,
+      "healthlog": true,
+      "dermatograms": true,
+      "telemedicine": true,
+      "inbound": true,
+      "outbound": true,
+      "epic": true,
+      "statisticsLogging": true,
+      "apps": {
+        "ChecklistManifesto": true,
+        "ContinuityOfCare": true,
+        "Videoconferencing": true,
+        "ZygoteAvatar": true        
+      },
+      "fhir": {
+        "AllergyIntolerances": true,
+        "AuditEvents": true,
+        "BodySites": true,
+        "CarePlans": true,
+        "Conditions": true,
+        "Devices": true,
+        "DiagnosticReports": true,
+        "Goals": true,
+        "ImagingStudies": true,
+        "Immunizations": true,
+        "Locations": true,
+        "Lists": true,
+        "Medications": true,
+        "MedicationOrders": true,
+        "MedicationStatements": true,
+        "Organizations": true,
+        "Observations": true,
+        "Patients": true,
+        "Practitioners": true,
+        "Procedures": true,
+        "Questionnaires": true,
+        "RiskAssessments": true
+      }
+    }
+  },
+  "private": {
+    "practitionerAccessCode": "hippocrates",
+    "sysadminAccessCode": "rootaccess",
+    "disableOauth": true,
+    "demo": {
+      "nightlyDatabaseDrop": true
+    }
+  }
+}
