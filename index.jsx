@@ -1,25 +1,15 @@
-import HelloWorldPage from './client/HelloWorldPage';
-import PostcardPage from './client/PostcardPage';
-import BodyMassIndexPage from './client/BodyMassIndexPage';
+import HealthgraphPage from './client/HealthgraphPage';
 
 var DynamicRoutes = [{
-  'name': 'HelloWorldPage',
+  'name': 'HealthgraphPage',
   'path': '/healthgraph',
-  'component': HelloWorldPage
-}, {
-  'name': 'BodyMassIndexPage',
-  'path': '/body-mass-index',
-  'component': BodyMassIndexPage
+  'component': HealthgraphPage
 }];
 
 var SidebarElements = [{
   'primaryText': 'Healthgraph',
   'to': '/healthgraph',
   'href': '/healthgraph'
-}, {
-  'primaryText': 'Body Mass Calculator',
-  'to': '/body-mass-index',
-  'href': '/body-mass-index'
 }];
 
-export { SidebarElements, DynamicRoutes, SamplePage, PostcardPage, BodyMassIndexPage };
+export { SidebarElements, DynamicRoutes, HealthgraphPage };

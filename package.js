@@ -1,6 +1,6 @@
 Package.describe({
     name: 'symptomatic:healthgraph',
-    version: '0.1.18',
+    version: '0.2.0',
     summary: 'PatientInsight - Accreditation Utility (Cardiac)',
     git: 'https://github.com/symptomatic/healthgraph  ',
     documentation: 'README.md'
@@ -40,8 +40,7 @@ Npm.depends({
     "lodash": "4.17.4",
     "react": "16.2.0",
     "react-dom": "16.4.1",
-    "nivo": "0.31.0",
-    'react-katex': '2.0.2',
     "simpl-schema": "1.5.3",
-    "fhir-kit-client": "1.4.0"
+    "hgraph-react": "0.0.7",
+    "d3-scale": "3.0.1"
 })
