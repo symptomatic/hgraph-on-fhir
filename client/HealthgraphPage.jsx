@@ -534,7 +534,7 @@ export class HealthgraphPage extends React.Component {
     } else if (Session.get('themePrimaryColor') === "blue"){
       themePrimaryColor = '#d5ddf6';
     } else if (Session.get('themePrimaryColor') === "green"){
-      themePrimaryColor = '#rgb(152, 189, 142)';
+      themePrimaryColor = '#98BD8E';
     }
 
 
