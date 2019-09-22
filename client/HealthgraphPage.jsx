@@ -563,7 +563,7 @@ export class HealthgraphPage extends React.Component {
                 />                
               </Col>
               <Col md={6} >
-                <AllergyIntolerancesTable
+                {/* <AllergyIntolerancesTable
                   data={ this.data.ccd.allergyIntolerances } 
                   hideIdentifier={this.data.hideIdentifiers}
                   hideCategory={true}
@@ -573,7 +573,7 @@ export class HealthgraphPage extends React.Component {
                   hideToggle={this.data.hideToggles}
                   hideActionIcons={this.data.hideActionIcons}
                 />
-                <br />
+                <br /> */}
                 <ConditionsTable
                   data={ this.data.ccd.conditions } 
                   hideIdentifier={this.data.hideIdentifiers}
@@ -586,14 +586,14 @@ export class HealthgraphPage extends React.Component {
                   hideActionIcons={this.data.hideActionIcons}
                 />          
                 <br />
-                <DiagnosticReportsTable 
+                {/* <DiagnosticReportsTable 
                   data={ this.data.ccd.diagnosticReports } 
                   hidePatientName={this.data.hidePatientName}
                   displayDates={true} 
                   hideCheckboxes={this.data.hideToggles}
                   hideActionIcons={this.data.hideActionIcons}
                 />
-                <br />
+                <br /> */}
                 <ImmunizationsTable 
                   data={ this.data.ccd.immunizations } 
                   hidePatientName={this.data.hidePatientName}
@@ -615,7 +615,7 @@ export class HealthgraphPage extends React.Component {
                   hideIdentifier={this.data.hideIdentifiers}
                 />
                 <br />
-                <MedicationStatementsTable
+                {/* <MedicationStatementsTable
                   data={ this.data.ccd.medicationStatements } 
                   hidePatientName={this.data.hidePatientName}
                   hidePrescriberName={true}
@@ -623,7 +623,7 @@ export class HealthgraphPage extends React.Component {
                   hideCheckboxes={this.data.hideToggles}
                   hideActionIcons={this.data.hideActionIcons}                  
                 />
-                <br />
+                <br /> */}
                 <ObservationsTable
                   observations={ this.data.ccd.observations } 
                   hideBarcodes={true}

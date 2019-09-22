@@ -1,6 +1,6 @@
 Package.describe({
     name: 'symptomatic:healthgraph',
-    version: '0.2.0',
+    version: '0.2.1',
     summary: 'PatientInsight - Accreditation Utility (Cardiac)',
     git: 'https://github.com/symptomatic/healthgraph  ',
     documentation: 'README.md'
@@ -23,6 +23,7 @@ Package.onUse(function(api) {
     }
      
     api.use('clinical:hl7-resource-observation');
+    api.use('clinical:hl7-resource-medication-statement');
 
     api.use('aldeed:collection2@3.0.0');
     api.use('simple:json-routes@2.1.0');
