@@ -1,12 +1,41 @@
 {
   "public": {
-    "title": "Patient Dashboard",
+    "title": "Healthgraph",
+    "secondaryTitle": " on FHIR",
     "theme": {
       "showVideoBackground": false,
       "darkroomTextEnabled": false,
       "backgroundImagePath": "/packages/symptomatic_theming/backgrounds/Gradient-Desaturated.png",
       "glassColor": "rgba(255, 255, 255, 1)",
       "boxShadows": "none"
+    },
+    "theme": {
+      "showVideoBackground": false,
+      "defaultVideo": "/VideoBackgrounds/GrayWaves.mp4",
+      "backgroundImagePath": "/backgrounds/medical/Gradient.jpg",
+      "palette": {
+        "primaryColor": "rgb(108, 183, 110)",
+        "primaryText": "rgba(255, 255, 255, 1) !important",
+      
+        "secondaryColor": "#06a9ac",
+        "secondaryText": "rgba(255, 255, 255, 1) !important",
+      
+        "cardColor": "#ffffff !important",
+        "cardTextColor": "rgba(0, 0, 0, 1) !important",
+      
+        "errorColor": "rgb(128,20,60) !important",
+        "errorText": "#ffffff !important",
+      
+        "appBarColor": "rgb(108, 183, 110) !important",
+        "appBarTextColor": "#ffffff !important",
+      
+        "paperColor": "#ffffff !important",
+        "paperTextColor": "rgba(0, 0, 0, 1) !important",
+      
+        "backgroundCanvas": "#eeeeee",
+        "nivoTheme": "purple_orange"
+      },
+      "grayscaleFilter": "0%"
     },
     "home": {
       "showUnderConstruction": false,
@@ -22,12 +51,10 @@
       "nfcOrbital": false,
       "notificationMenu": false,
       "searchbarVisible": true,
+      "prominantHeader": true,
       "displayNavbars": true,
       "disableHeader": false,
       "disableFooter": false,
-      "darkroom": false,
-      "iFrameEnabled": false,
-      "iFrameUrl": "https://www.wikipedia.org/",
       "paginationLimit": 100,
       "subscriptionLimit": 1000,
       "cards": {
@@ -40,10 +67,10 @@
       },
       "routes": {
         "homePage": "/",
-        "landingPage": "/scorecard",
-        "adminWelcomePage": "/scorecard",
-        "adminHomePage": "/scorecard",
-        "adminDashboard": "/scorecard"
+        "landingPage": "/",
+        "adminWelcomePage": "/",
+        "adminHomePage": "/",
+        "adminDashboard": "/"
       },
       "header":{
         "menuIcon": ""

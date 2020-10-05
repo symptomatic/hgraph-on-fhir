@@ -104,6 +104,27 @@
       "absoluteRange": [0, 160],
       "weight": 10,
       "unitLabel": "mg/dl"
+    },
+    "pulse": {
+      "label": "Heart rate",
+      "healthyRange": [50, 80],
+      "absoluteRange": [30, 180],
+      "weight": 10,
+      "unitLabel": "bps"
+    },
+    "bloodOxygenation": {
+      "label": "Oxygen saturation in Blood",
+      "healthyRange": [90, 100],
+      "absoluteRange": [70, 100],
+      "weight": 10,
+      "unitLabel": "%"
+    },
+    "temperature": {
+      "label": "Body temperature",
+      "healthyRange": [97, 99],
+      "absoluteRange": [95, 105],
+      "weight": 10,
+      "unitLabel": "F"
     }
   },
   "female": {
@@ -204,6 +225,27 @@
       "absoluteRange": [0, 160],
       "weight": 10,
       "unitLabel": "mg/dl"
+    },
+    "pulse": {
+      "label": "Heart rate",
+      "healthyRange": [50, 80],
+      "absoluteRange": [30, 180],
+      "weight": 10,
+      "unitLabel": "bps"
+    },
+    "bloodOxygenation": {
+      "label": "Oxygen saturation in Blood",
+      "healthyRange": [90, 100],
+      "absoluteRange": [70, 100],
+      "weight": 10,
+      "unitLabel": "%"
+    },
+    "temperature": {
+      "label": "Body temperature",
+      "healthyRange": [97, 99],
+      "absoluteRange": [95, 105],
+      "weight": 10,
+      "unitLabel": "F"
     }
   }
 }

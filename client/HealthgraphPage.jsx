@@ -1,5 +1,3 @@
-import { CardMedia, CardText, CardTitle, CardHeader, RaisedButton } from 'material-ui';
-import { GlassCard, FullPageCanvas, Glass } from 'meteor/clinical:glass-ui';
 
 import React from 'react';
 import { ReactMeteorData } from 'meteor/react-meteor-data';
@@ -8,25 +6,40 @@ import { browserHistory } from 'react-router';
 
 import { get, has } from 'lodash';
 
-import { Table } from 'react-bootstrap';
 import { Session } from 'meteor/session';
 import { HTTP } from 'meteor/http';
 import { EJSON } from 'meteor/ejson';
 
-import { Col, Grid, Row } from 'react-bootstrap';
+import moment from 'moment';
 
-import HGraph, { hGraphConvert, calculateHealthScore } from 'hgraph-react'; // symlinked with 'yarn link' from project root.
+import Grid from '@material-ui/core/Grid';
+import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
+import Button from '@material-ui/core/Container';
 
-import { ObservationsTable } from 'meteor/clinical:hl7-resource-observation';
-import { AllergyIntolerancesTable } from 'meteor/clinical:hl7-resource-allergy-intolerance';
-import { ConditionsTable } from 'meteor/clinical:hl7-resource-condition';
-import { ImmunizationsTable } from 'meteor/clinical:hl7-resource-immunization';
-import { CarePlansTable } from 'meteor/clinical:hl7-resource-careplan';
-import { MedicationStatementsTable } from 'meteor/clinical:hl7-resource-medication-statement';
-import { MedicationOrdersTable } from 'meteor/clinical:hl7-resource-medication-order';
-import { DiagnosticReportsTable } from 'meteor/clinical:hl7-resource-diagnostic-report';
-import { PatientsTable } from 'meteor/clinical:hl7-resource-patient';
-import { ProceduresTable } from 'meteor/clinical:hl7-resource-procedure';
+import HGraph from 'hgraph-react'; // symlinked with 'yarn link' from project root.
+import { PageCanvas, StyledCard } from 'material-fhir-ui';
+
+
+import { 
+  AllergyIntolerancesTable, 
+  CarePlansTable,
+  ConditionsTable, 
+  DiagnosticReportsTable,
+  ImmunizationsTable, 
+  MedicationStatementsTable,
+  MedicationOrdersTable,
+  ObservationsTable,  
+  PatientsTable,
+  ProceduresTable,
+  DynamicSpacer,
+  AllergyIntolerances,
+  CarePlans,
+  Conditions,
+  Immunizations,
+  MedicationStatements,
+  Observations
+} from 'meteor/clinical:hl7-fhir-data-infrastructure';
 
 import { scaleLinear } from 'd3-scale';
 import metrics from '../data/metrics.healthrecords.json';
@@ -52,52 +65,119 @@ let sampleData = [
   },
   {
     "metric": "bloodPressureSystolic",
-    "value": 0
+    "label": "Systolic blood pressure",
+    "healthMin": 100,
+    "healthMax": 140,
+    "absoluteMin": 80,
+    "absoluteMax": 200,
+    "value": 120
   },
   {
     "metric": "bloodPressureDiastolic",
-    "value": 0
-  },
-  {
-    "metric": "alcoholUse",
-    "value": 0
-  },
-  {
-    "metric": "nicotineUse",
-    "value": 0
-  },
-  {
-    "metric": "painLevel",
-    "value": 0
-  },
-  {
-    "metric": "waistCircumference",
-    "value": 0
+    "label": "Diastolic blood pressure",
+    "healthMin": 60,
+    "healthMax": 100,
+    "absoluteMin": 0,
+    "absoluteMax": 200,
+    "value": 80
   },
   {
     "metric": "weight",
-    "value": 0
+    "label": "Body weight Measured",
+    "healthMin": 120,
+    "healthMax": 200,
+    "absoluteMin": 80,
+    "absoluteMax": 240,
+    "value": 140
   },
   {
-    "metric": "exercise",
-    "value": 0
+    "metric": "pulse",
+    "label": "Heart rate",
+    "healthMin": 50,
+    "healthMax": 80,
+    "absoluteMin": 30,
+    "absoluteMax": 120,
+    "value": 60
   },
   {
-    "metric": "sleep",
-    "value": 0
+    "metric": "bloodOxygenation",
+    "label": "Oxygen saturation in Blood",
+    "healthMin": 90,
+    "healthMax": 100,
+    "absoluteMin": 70,
+    "absoluteMax": 100,
+    "value": 98
   },
   {
-    "metric": "happiness",
-    "value": 0
+    "metric": "temperature",
+    "label": "Body temperature",
+    "healthMin": 96,
+    "healthMax": 99,
+    "absoluteMin": 94,
+    "absoluteMax": 106,
+    "value": 98.6
   },
-  {
-    "metric": "glucose",
-    "value": 0
-  }
+  // {
+  //   "metric": "alcoholUse",
+  //   "value": 0
+  // },
+  // {
+  //   "metric": "nicotineUse",
+  //   "value": 0
+  // },
+  // {
+  //   "metric": "painLevel",
+  //   "value": 0
+  // },
+  // {
+  //   "metric": "waistCircumference",
+  //   "value": 0
+  // },
+  // {
+  //   "metric": "exercise",
+  //   "value": 0
+  // },
+  // {
+  //   "metric": "sleep",
+  //   "value": 0
+  // },
+  // {
+  //   "metric": "happiness",
+  //   "value": 0
+  // },
+  // {
+  //   "metric": "glucose",
+  //   "value": 0
+  // }
 ];
 
+//==========================================================================================
+// Helper Functions
+
+const hGraphConvert = (gender, metric, data) => {
+  const metricObj = metrics[gender][metric];
+  //const sortedValues = data.values.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+  return {
+    label: data.label || metricObj.label,
+    // value: sortedValues[sortedValues.length - 1].value,
+    // values: sortedValues,
+    value: data.value || metricObj.value[0],
+    values: data.values,
+
+    healthyMin: data.healthyMin || metricObj.healthyRange[0],
+    healthyMax: data.healthyMax || metricObj.healthyRange[1],
+    absoluteMin: data.absoluteMin || metricObj.absoluteRange[0],
+    absoluteMax: data.absoluteMax || metricObj.absoluteRange[1],
+    weight: data.weight || metricObj.weight,
+    unitLabel: data.unitLabel || metricObj.unitLabel
+  }
+}
+
+//==========================================================================================
+// Main Component
+
 Session.setDefault('hideToggles', true);
-Session.setDefault('themePrimaryColor', 'green');
 Session.setDefault('systemOfMeasurement', 'imperial');
 
 export class HealthgraphPage extends React.Component {
@@ -149,6 +229,7 @@ export class HealthgraphPage extends React.Component {
   return scoreTotal * 100;
   }
   convertDataSet(data){
+    console.log('Converting data set', data)
     return data.map(d => {
       const converted = hGraphConvert('male', d.metric, d);
       converted.id = d.metric;
@@ -220,8 +301,7 @@ export class HealthgraphPage extends React.Component {
         spacer: {
           display: 'block'
         },
-        title: Glass.darkroom(),
-        subtitle: Glass.darkroom()
+
       },
       ccd: {
         allergyIntolerances: [],
@@ -232,9 +312,12 @@ export class HealthgraphPage extends React.Component {
         medications: [],
         medicationOrders: [],
         medicationStatements: [],
-        observations: [],
+        observations: Observations.find().fetch(),
         patients: [],
         procedures: []
+      },
+      counts: {
+        observationsCount: Observations.find().count()
       },
       minimongo: {
         allergyIntolerances: [],
@@ -266,18 +349,20 @@ export class HealthgraphPage extends React.Component {
     let systolic;
 
 
+    console.log('Parsing sampleData', sampleData);
+
     let resultingData = [];
     sampleData.forEach(function(datum){
       switch (datum.metric) {
-        case "totalCholesterol":
-          console.log('Observations.find(cholesterol)', Observations.find().count())
-          datum.value = 0.5;
-          datum.weight = 0;
-          resultingData.push(datum);
-          break;
+        // case "totalCholesterol":
+        //   console.log('Observations.find(cholesterol)', Observations.find().count())
+        //   datum.value = 0.5;
+        //   datum.weight = 0;
+        //   resultingData.push(datum);
+        //   break;
         case "bloodPressureSystolic":
           // console.log('Observations.find().bloodPressureSystolic', Observations.find({'component.code.coding.code': '8480-6'}).count())
-          let lastSystolicObservation = Observations.find({'component.code.coding.code': '8480-6'}, {sort: {'effectiveDateTime': -1}}).fetch()[0];
+          let lastSystolicObservation = Observations.find({'code.coding.code': '55284-4'}, {sort: {'effectiveDateTime': -1}}).fetch()[0];
           if(lastSystolicObservation){
             console.log('Most recent systolic BP observation', lastSystolicObservation);
             components = get(lastSystolicObservation, 'component');
@@ -291,12 +376,12 @@ export class HealthgraphPage extends React.Component {
           }
           break;
         case "bloodPressureDiastolic":
-          let lastDiastolicObservation = Observations.find({'component.code.coding.code': '8462-4'}, {sort: {'effectiveDateTime': -1}}).fetch()[0];
+          let lastDiastolicObservation = Observations.find({'code.coding.code': '55284-4'}, {sort: {'effectiveDateTime': -1}}).fetch()[0];
           if(lastDiastolicObservation){
             console.log('Most recent diastolic BP observation', lastDiastolicObservation);
             components = get(lastDiastolicObservation, 'component');
             components.forEach(function(component){
-              if(get(component, 'code.coding[0].code') === "8480-6"){
+              if(get(component, 'code.coding[0].code') === "8462-4"){
                 datum.value = get(component, 'valueQuantity.value', 0)
               }
             })
@@ -304,39 +389,72 @@ export class HealthgraphPage extends React.Component {
             resultingData.push(datum);  
           }
           break;
-        case "alcoholUse":
-          datum.value = 0;
-          datum.weight = 20;
-          resultingData.push(datum);
+        case "temperature":
+          let lastTemperatureObservation = Observations.find({'code.coding.code': '8310-5'}, {sort: {'effectiveDateTime': -1}}).fetch()[0];
+          if(lastTemperatureObservation){
+            console.log('Most recent temperature observation', lastTemperatureObservation);
+            datum.value = get(lastTemperatureObservation, 'valueQuantity.value');
+            datum.weight = 30;
+            resultingData.push(datum);  
+          }
           break;
-        case "nicotineUse":
-          datum.value = 0;
-          datum.weight = 20;
-          resultingData.push(datum);
+        case "pulse":
+          let lastPulseObservation = Observations.find({'code.coding.code': '8867-4'}, {sort: {'effectiveDateTime': -1}}).fetch()[0];
+          if(lastPulseObservation){
+            console.log('Most recent pulse observation', lastPulseObservation);
+            datum.value = get(lastPulseObservation, 'valueQuantity.value');
+            datum.weight = 10;
+            resultingData.push(datum);  
+          }
           break;
-        case "painLevel":
-          datum.value = 0;
-          datum.weight = 20;
-          resultingData.push(datum);
+        case "bloodOxygenation":
+          let lastBloodOxygenation = Observations.find({'code.coding.code': '20564-1'}, {sort: {'effectiveDateTime': -1}}).fetch()[0];
+          if(lastBloodOxygenation){
+            console.log('Most recent blood oxygenation observation', lastBloodOxygenation);
+            datum.value = get(lastBloodOxygenation, 'valueQuantity.value');
+            datum.weight = 20;
+            resultingData.push(datum);  
+          }
           break;
+
         case "waistCircumference":
-          // datum.value = 40;
-          // resultingData.push(datum);
-          break;
+          let lastWaistCircumference = Observations.find({'code.coding.code': '56115-9'}, {sort: {'effectiveDateTime': -1}}).fetch()[0];
+          if(lastWaistCircumference){
+            console.log('Most recent waist circumfrence observation', lastWaistCircumference);
+            datum.value = get(lastWaistCircumference, 'valueQuantity.value');
+            datum.weight = 20;
+            resultingData.push(datum);  
+          }
         case "weight":
           // console.log('Observations.find(weight)', Observations.find({'code.coding.code': '29463-7'}).count())
-          let lastWeightMeasurement = Observations.find({'code.coding.code': '29463-7'}, {sort: {'effectiveDateTime': -1}}).fetch()[0];
+          let lastWeightMeasurement = Observations.find({'code.coding.code': '3141-9'}, {sort: {'effectiveDateTime': -1}}).fetch()[0];
           if(lastWeightMeasurement){
             console.log('Most recent weight observation', lastWeightMeasurement);
             datum.value = get(lastWeightMeasurement, 'valueQuantity.value');
 
-            if(Session.equals('systemOfMeasurement', 'imperial')){
-              datum.value = datum.value * 2.205;
-            }
+            // if(Session.equals('systemOfMeasurement', 'imperial')){
+            //   datum.value = datum.value * 2.205;
+            // }
 
             datum.weight = 20;
             resultingData.push(datum);  
           }
+          break;
+                
+        case "alcoholUse":
+          // datum.value = 0;
+          // datum.weight = 20;
+          // resultingData.push(datum);
+          break;
+        case "nicotineUse":
+          // datum.value = 0;
+          // datum.weight = 20;
+          // resultingData.push(datum);
+          break;
+        case "painLevel":
+          // datum.value = 0;
+          // datum.weight = 20;
+          // resultingData.push(datum);
           break;
         case "exercise":
           // datum.value = 8;
@@ -367,10 +485,12 @@ export class HealthgraphPage extends React.Component {
     console.log('resultingData', resultingData)
 
     data.currentYearData = this.convertDataSet(resultingData);
+    console.log('data.currentYearData', data.currentYearData)
+
     data.currentScore = parseInt(this.calculateHealthScore(this.convertDataSet(resultingData)), 10);
 
 
-    data.style.indexCard = Glass.darkroom(data.style.indexCard);
+    // data.style.indexCard = Glass.darkroom(data.style.indexCard);
 
     if (Session.get('appWidth') < 768) {
       data.style.inactiveIndexCard.width = '100%';
@@ -390,93 +510,17 @@ export class HealthgraphPage extends React.Component {
       }
     }
 
-    if(Meteor.user()){
+    //if(Meteor.user()){
 
-      var filters = get(Meteor.user(), 'profile.filters');
-
-      if(filters){
-        if(filters.remove && filters.remove.length > 0){
-          data.query.$nor = [];
-          filters.remove.forEach(function(term){
-            if(term){
-              data.query.$nor.push({ "code.text": { "$regex": "^" + term, "$options": "i" } })
-            }
-          });  
-        }
-  
-        if(filters.mustHave && filters.mustHave.length > 0){
-          data.query.$or = [];
-          filters.mustHave.forEach(function(term){
-            if(term){
-              data.query.$or.push({ "code.text": { "$regex": "^" + term, "$options": "i" } })
-            }
-          })          
-        }
-
-        if(get(filters, 'sensitiveItems.substanceAbuse')){
-          if(!data.query.$nor) data.query.$nor = [];
-          // Additional info:
-          // http://www.healthvermont.gov/sites/default/files/documents/2016/11/ADAP_ICD-10_ADAP_Approved_Conversion_Codes.pdf
-          data.query.$nor.push({ "code.text": { "$regex": "^alcohol", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^cocain", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^cocaine", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^opioid", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^hallucinogen", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^psychoactive substance", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^cannabis", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^abuse", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^dependence", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^intoxication", "$options": "i" } })
-        }
-
-        if(get(filters, 'sensitiveItems.mentalHealth')){
-          if(!data.query.$nor) data.query.$nor = [];
-          data.query.$nor.push({ "code.text": { "$regex": "^anxiety", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^adjustment disorder", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^post-traumatic stress disorder", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^depressive", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^disorder", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^personality", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^phobia", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^obsessional", "$options": "i" } })
-
-          // TODO: filter explicit codes
-          // https://www.simplepractice.com/blog/top-icd-10-codes-behavioral-health-2017/  
-        }
-        if(get(filters, 'sensitiveItems.sexualHealth')){
-          if(!data.query.$nor) data.query.$nor = [];
-          data.query.$nor.push({ "code.text": { "$regex": "^neisseria", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^gonorrhoeae", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^gonnorrhoeae", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^gonnorrhea", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^chlamydia", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^syphilis", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^hepatitis", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^eGFR", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^HIV", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^AIDS", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^herpes", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^crabs", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^chlamydia", "$options": "i" } })
-
-          data.query.$nor.push({ "code.text": { "$regex": "^estrogen", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^estradiol", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^testosterone", "$options": "i" } })
-          data.query.$nor.push({ "code.text": { "$regex": "^progesterone", "$options": "i" } })
-
-          // TODO:  filter explicit codes
-          // https://www.aapc.com/blog/32415-sti-screening-under-medicare/
-        }
-      }
 
       
-      if(typeof AllergyIntolerances === "object"){
+      if(AllergyIntolerances){
         data.ccd.allergyIntolerances = AllergyIntolerances.find().fetch();
       }
-      if(typeof CarePlans === "object"){
+      if(CarePlans){
         data.ccd.carePlans = CarePlans.find().fetch();
       }
-      if(typeof Conditions === "object"){
+      if(Conditions){
         let conditionsQuery = {};
         if(data.query){
           conditionsQuery = data.query;
@@ -486,37 +530,33 @@ export class HealthgraphPage extends React.Component {
         }
         data.ccd.conditions = Conditions.find(conditionsQuery).fetch();
       }
-      if(typeof DiagnosticReports === "object"){
+      if(DiagnosticReports){
         data.ccd.diagnosticReports = DiagnosticReports.find(data.query).fetch();
       }
-      if(typeof Immunizations === "object"){
+      if(Immunizations){
         data.ccd.immunizations = Immunizations.find().fetch();
       }
-      if(typeof Medications === "object"){
+      if(Medications){
         data.ccd.medications = Medications.find().fetch();
       }
-      if(typeof Medications === "object"){
+      if(Medications){
         data.ccd.medicationOrders = MedicationOrders.find().fetch();
       }        
-      if(typeof MedicationStatements === "object"){
+      if(MedicationStatements){
         data.ccd.medicationStatements = MedicationStatements.find().fetch();
       }
-      if(typeof Patients === "object"){
+      if(Patients){
         data.ccd.patients = Patients.find().fetch();
       }
-      if(typeof Observations === "object"){
-        data.ccd.observations = Observations.find(data.query).fetch();
+      if(Observations){
+        data.ccd.observations = Observations.find().fetch();
       }
-      if(typeof Procedures === "object"){
+      if(Procedures){
         data.ccd.procedures = Procedures.find(data.query).fetch();
       }  
-    }
+    //}
 
-
-
-
-
-    if(process.env.NODE_ENV === "test") console.log("HealthgraphPage[data]", data);
+    console.log("HealthgraphPage[data]", data);
     return data;
   }
 
@@ -524,136 +564,138 @@ export class HealthgraphPage extends React.Component {
     console.log('rowClick')
   }
   render() {
-    const size = 600;
 
-    var themePrimaryColor;
+    // small web window
+    let graphSize = (window.innerWidth - 172) * 0.5;
 
-
-    if(Session.get('themePrimaryColor') === 'pink'){
-      themePrimaryColor = '#ecdcde';
-    } else if (Session.get('themePrimaryColor') === "blue"){
-      themePrimaryColor = '#d5ddf6';
-    } else if (Session.get('themePrimaryColor') === "green"){
-      themePrimaryColor = '#98BD8E';
+    // double card layout (smaller)
+    if(window.innerWidth > 768){
+      graphSize = (window.innerWidth - 172) * 0.4;
     }
 
+    // iphone & ipad
+    if(Meteor.isCordova){
+      graphSize = window.innerWidth - 200;
+    }
 
+    let themePrimaryColor = get(Meteor, 'settings.public.theme.palette.primaryColor')
 
+    let paddingWidth = 84;
+    if(Meteor.isCordova){
+      paddingWidth = 20;
+    }
+
+    let cardWidth = window.innerWidth - paddingWidth;
+
+    let columnVisibility = {
+      sampledData: false,
+      codeValue: true
+    }
+
+    if(window.innerWidth > 1600){
+      columnVisibility.sampledData = true;
+    }
+    if(Meteor.isCordova){
+      columnVisibility.codeValue = false;
+    }
 
     return (
-      <div id='indexPage'>
-        <FullPageCanvas>
-          <GlassCard height='auto'>
-            <CardTitle 
-              title="Healthgraph Dashboard" 
-              subtitle="August 17th, 2019" 
-              style={{fontSize: '100%'}} />
-            <CardText style={{fontSize: '100%'}}>
-              <Col md={6} style={{fontWeight: 200, fontFamily: "Helvetica Neue", textAlign: 'center'}} >
-                <HGraph
-                  data={ this.data.currentYearData }
-                  score={ this.data.currentScore }
-                  width={ size }
-                  height={ size }
-                  fontSize={ size < 300 ? 12 : 16 }
-                  pointRadius={ size < 300 ? 5 : 10 }
-                  scoreFontSize={ size < 300 ? 60 : 120 }
-                  healthyRangeFillColor={themePrimaryColor}
-                  showScore={false}
-                />                
-              </Col>
-              <Col md={6} >
-                {/* <AllergyIntolerancesTable
-                  data={ this.data.ccd.allergyIntolerances } 
-                  hideIdentifier={this.data.hideIdentifiers}
-                  hideCategory={true}
-                  displayDates={false}
-                  hidePatient={this.data.hidePatientName} 
-                  hideEnteredInError={true}
-                  hideToggle={this.data.hideToggles}
-                  hideActionIcons={this.data.hideActionIcons}
-                />
-                <br /> */}
-                <ConditionsTable
-                  data={ this.data.ccd.conditions } 
-                  hideIdentifier={this.data.hideIdentifiers}
-                  hideEvidence={true}
-                  hideServerity={true}
-                  hideEnteredInError={true}
-                  hideAsserterName={true}
-                  hidePatientName={this.data.hidePatientName}
-                  hideCheckboxes={this.data.hideToggles}
-                  hideActionIcons={this.data.hideActionIcons}
-                />          
-                <br />
-                {/* <DiagnosticReportsTable 
-                  data={ this.data.ccd.diagnosticReports } 
-                  hidePatientName={this.data.hidePatientName}
-                  displayDates={true} 
-                  hideCheckboxes={this.data.hideToggles}
-                  hideActionIcons={this.data.hideActionIcons}
-                />
-                <br /> */}
-                <ImmunizationsTable 
-                  data={ this.data.ccd.immunizations } 
-                  hidePatientName={this.data.hidePatientName}
-                  displayDates={true} 
-                  hideCheckboxes={this.data.hideToggles}
-                  hideIdentifier={this.data.hideIdentifiers}
-                  hidePatient={this.data.hidePatientName}
-                  hidePerformer={true}
-                  hideActionIcons={this.data.hideActionIcons}
-                />
-                <br />
-                <MedicationOrdersTable
-                  medicationOrders={ this.data.ccd.medicationOrders } 
-                  hidePatientName={this.data.hidePatientName}
-                  hidePrescriberName={true}
-                  displayDates={true} 
-                  hideCheckboxes={this.data.hideToggles}
-                  hideActionIcons={this.data.hideActionIcons}
-                  hideIdentifier={this.data.hideIdentifiers}
-                />
-                <br />
-                {/* <MedicationStatementsTable
-                  data={ this.data.ccd.medicationStatements } 
-                  hidePatientName={this.data.hidePatientName}
-                  hidePrescriberName={true}
-                  displayDates={true} 
-                  hideCheckboxes={this.data.hideToggles}
-                  hideActionIcons={this.data.hideActionIcons}                  
-                />
-                <br /> */}
-                <ObservationsTable
-                  observations={ this.data.ccd.observations } 
-                  hideBarcodes={true}
-                  hideValue={true}
-                  hideComparator={true}
-                  hideSubjects={true}
-                  hidePatientName={this.data.hidePatientName}
-                  multiline={true}
-                  query={this.data.query}
-                  hideCheckboxes={this.data.hideToggles}
-                  hideActionIcons={this.data.hideActionIcons}
-                />
-                <br />
-                <ProceduresTable
-                  data={ this.data.ccd.procedures } 
-                  hideIdentifier={this.data.hideIdentifiers}
-                  hideSubject={this.data.hidePatientName}
-                  hideCategory={true}
-                  hidePerformer={true}
-                  hideBodySite={true}
-                  displayDates={true} 
-                  hideCheckboxes={this.data.hideToggles}
-                  hideActionIcons={this.data.hideActionIcons}
-                />
-
-              </Col> 
-            </CardText>
-          </GlassCard>
-        </FullPageCanvas>
-      </div>
+      // <div id='indexPage'>
+        <PageCanvas id='healthgraphHomepage' headerHeight={148} paddingLeft={paddingWidth} paddingRight={paddingWidth} >
+          <Grid container spacing={3}>
+            <Grid item key="1" md={6} style={{width: '100%'}}>
+              <StyledCard id="healthgraphCard" height='auto' width={cardWidth + 'px'}>
+                <CardHeader 
+                  title="Vitals Summary" 
+                  subheader={moment().format("MMM DD YYYY")}
+                  style={{fontSize: '100%'}} />
+                <CardContent style={{fontSize: '100%', width: '100%'}}>
+                  <HGraph
+                      data={ this.data.currentYearData }
+                      score={ this.data.currentScore }
+                      width={ graphSize }
+                      height={ graphSize }
+                      fontSize={ graphSize < 300 ? 10 : 16 }
+                      pointRadius={ graphSize < 300 ? 5 : 10 }
+                      scoreFontSize={ graphSize < 300 ? 48 : 96 }
+                      healthyRangeFillColor={themePrimaryColor}
+                      showScore={true}
+                      margin={{ top: 72, right: 72, bottom: 72, left: 72 }}
+                    />                
+                </CardContent>
+              </StyledCard>
+            </Grid>
+            <Grid item key="2" md={6} style={{width: '100%'}}>
+              <StyledCard height='auto' width={cardWidth + 'px'}>
+                <CardHeader title="Observations" style={{fontSize: '100%'}} />
+                <CardContent style={{fontSize: '100%', width: '100%'}}>
+                  <ObservationsTable
+                      observations={ this.data.ccd.observations } 
+                      hideCheckbox={true}
+                      hideActionIcons={true}
+                      hideCategory={true}
+                      hideIdentifier={true}                      
+                      hideCodeValue={columnVisibility.codeValue}
+                      hideSubjectReference={true}
+                      hideDevices={true}
+                      hideSubject={true}
+                      sampledData={columnVisibility.sampledData}
+                      rowsPerPage={10}
+                      count={this.data.counts.observationsCount}
+                      style={{width: '100%'}}
+                    />         
+                </CardContent>
+              </StyledCard>
+              {/* <DynamicSpacer />
+              <StyledCard height='auto'>
+                <CardHeader 
+                  title="Healthgraph Dashboard" 
+                  subheader="August 17th, 2019" 
+                  style={{fontSize: '100%'}} />
+                <CardContent style={{fontSize: '100%'}}>
+                  <Grid item md={6} >
+                    <CardHeader title="Immunizations" style={{fontSize: '100%'}} />
+                    <ImmunizationsTable 
+                      data={ this.data.ccd.immunizations } 
+                      hidePatientName={this.data.hidePatientName}
+                      displayDates={true} 
+                      hideCheckboxes={this.data.hideToggles}
+                      hideIdentifier={this.data.hideIdentifiers}
+                      hidePatient={this.data.hidePatientName}
+                      hidePerformer={true}
+                      hideActionIcons={this.data.hideActionIcons}
+                    />
+                    <br />
+                    <CardHeader title="Medication Statements" style={{fontSize: '100%'}} />
+                    <MedicationStatementsTable
+                      data={ this.data.ccd.medicationStatements } 
+                      hidePatientName={this.data.hidePatientName}
+                      hidePrescriberName={true}
+                      displayDates={true} 
+                      hideCheckboxes={this.data.hideToggles}
+                      hideActionIcons={this.data.hideActionIcons}                  
+                    />
+                    <br />
+                    <CardHeader title="Observations" style={{fontSize: '100%'}} />
+                    <ObservationsTable
+                      observations={ this.data.ccd.observations } 
+                      hideBarcodes={true}
+                      hideValue={true}
+                      hideComparator={true}
+                      hideSubjects={true}
+                      hidePatientName={this.data.hidePatientName}
+                      multiline={true}
+                      query={this.data.query}
+                      hideCheckboxes={this.data.hideToggles}
+                      hideActionIcons={this.data.hideActionIcons}
+                    />
+                  </Grid> 
+                </CardContent>
+              </StyledCard> */}
+            </Grid>
+          </Grid>       
+        </PageCanvas>
+      // </div>
     );
   }
 
