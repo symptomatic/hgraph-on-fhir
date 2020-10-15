@@ -1,6 +1,9 @@
 import React from 'react';
 import HealthgraphPage from './client/HealthgraphPage';
 
+import {androidRadioButtonOn} from 'react-icons-kit/ionicons/androidRadioButtonOn'
+
+
 import { 
   HealthGraphFooterButtons
 } from './client/HealthGraphFooterButtons';
@@ -12,16 +15,21 @@ var DynamicRoutes = [{
   'component': HealthgraphPage
 }];
 
-var SidebarElements = [{
+var SidebarWorkflows = [{
   'primaryText': 'Healthgraph',
   'to': '/healthgraph',
-  'href': '/healthgraph'
+  'iconName': 'healthgraph'
 }];
 
 let FooterButtons = [{
   pathname: '/healthgraph',
   component: <HealthGraphFooterButtons />
+}, {
+  pathname: '/',
+  component: <HealthGraphFooterButtons />
 }];
 
+let MainPage = HealthgraphPage;
 
-export { SidebarElements, DynamicRoutes, HealthgraphPage, FooterButtons };
+
+export { MainPage, SidebarWorkflows, DynamicRoutes, HealthgraphPage, FooterButtons };

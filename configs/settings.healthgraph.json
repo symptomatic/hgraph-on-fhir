@@ -4,13 +4,6 @@
     "secondaryTitle": " on FHIR",
     "theme": {
       "showVideoBackground": false,
-      "darkroomTextEnabled": false,
-      "backgroundImagePath": "/packages/symptomatic_theming/backgrounds/Gradient-Desaturated.png",
-      "glassColor": "rgba(255, 255, 255, 1)",
-      "boxShadows": "none"
-    },
-    "theme": {
-      "showVideoBackground": false,
       "defaultVideo": "/VideoBackgrounds/GrayWaves.mp4",
       "backgroundImagePath": "/backgrounds/medical/Gradient.jpg",
       "palette": {
@@ -45,6 +38,9 @@
       "showRegistration": true
     },
     "defaults": {
+      "route": "/healthgraph",
+      "landingPage": "/healthgraph",
+      "homePage": "/healthgraph",
       "avatars": true,
       "barcodes": true,
       "hexgridMenu": false,
@@ -66,11 +62,11 @@
         "signInWith": false
       },
       "routes": {
-        "homePage": "/",
-        "landingPage": "/",
-        "adminWelcomePage": "/",
-        "adminHomePage": "/",
-        "adminDashboard": "/"
+        "homePage": "/healthgraph",
+        "landingPage": "/healthgraph",
+        "adminWelcomePage": "/healthgraph",
+        "adminHomePage": "/healthgraph",
+        "adminDashboard": "/healthgraph"
       },
       "header":{
         "menuIcon": ""

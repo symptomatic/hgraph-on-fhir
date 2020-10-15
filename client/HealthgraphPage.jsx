@@ -565,6 +565,9 @@ export class HealthgraphPage extends React.Component {
   }
   render() {
 
+    let headerHeight = LayoutHelpers.calcHeaderHeight();
+    let formFactor = LayoutHelpers.determineFormFactor(2);
+
     // small web window
     let graphSize = (window.innerWidth - 172) * 0.5;
 
@@ -599,12 +602,14 @@ export class HealthgraphPage extends React.Component {
       columnVisibility.codeValue = false;
     }
 
+
+
     return (
       // <div id='indexPage'>
-        <PageCanvas id='healthgraphHomepage' headerHeight={148} paddingLeft={paddingWidth} paddingRight={paddingWidth} >
+        <PageCanvas id='healthgraphHomepage' headerHeight={headerHeight} paddingLeft={paddingWidth} paddingRight={paddingWidth} >
           <Grid container spacing={3}>
-            <Grid item key="1" md={6} style={{width: '100%'}}>
-              <StyledCard id="healthgraphCard" height='auto' width={cardWidth + 'px'}>
+            <Grid item key="1" md={6} style={{width: '100%', marginBottom: '20px'}}>
+              <StyledCard id="healthgraphCard" height='auto' margin={20} width={cardWidth + 'px'}>
                 <CardHeader 
                   title="Vitals Summary" 
                   subheader={moment().format("MMM DD YYYY")}
@@ -626,23 +631,17 @@ export class HealthgraphPage extends React.Component {
               </StyledCard>
             </Grid>
             <Grid item key="2" md={6} style={{width: '100%'}}>
-              <StyledCard height='auto' width={cardWidth + 'px'}>
+              <StyledCard height='auto' margin={20} width={cardWidth + 'px'}>
                 <CardHeader title="Observations" style={{fontSize: '100%'}} />
                 <CardContent style={{fontSize: '100%', width: '100%'}}>
                   <ObservationsTable
                       observations={ this.data.ccd.observations } 
-                      hideCheckbox={true}
-                      hideActionIcons={true}
-                      hideCategory={true}
-                      hideIdentifier={true}                      
                       hideCodeValue={columnVisibility.codeValue}
-                      hideSubjectReference={true}
-                      hideDevices={true}
-                      hideSubject={true}
                       sampledData={columnVisibility.sampledData}
                       rowsPerPage={10}
                       count={this.data.counts.observationsCount}
                       style={{width: '100%'}}
+                      formFactorLayout={formFactor}
                     />         
                 </CardContent>
               </StyledCard>
