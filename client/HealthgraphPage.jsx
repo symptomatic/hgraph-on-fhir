@@ -605,10 +605,9 @@ export class HealthgraphPage extends React.Component {
 
 
     return (
-      // <div id='indexPage'>
         <PageCanvas id='healthgraphHomepage' headerHeight={headerHeight} paddingLeft={paddingWidth} paddingRight={paddingWidth} >
           <Grid container spacing={3}>
-            <Grid item key="1" md={6} style={{width: '100%', marginBottom: '20px'}}>
+            <Grid item key="1" lg={6} style={{width: '100%', marginBottom: '20px'}}>
               <StyledCard id="healthgraphCard" height='auto' margin={20} width={cardWidth + 'px'}>
                 <CardHeader 
                   title="Vitals Summary" 
@@ -630,7 +629,7 @@ export class HealthgraphPage extends React.Component {
                 </CardContent>
               </StyledCard>
             </Grid>
-            <Grid item key="2" md={6} style={{width: '100%'}}>
+            <Grid item key="2" lg={6} style={{width: '100%'}}>
               <StyledCard height='auto' margin={20} width={cardWidth + 'px'}>
                 <CardHeader title="Observations" style={{fontSize: '100%'}} />
                 <CardContent style={{fontSize: '100%', width: '100%'}}>
@@ -645,56 +644,10 @@ export class HealthgraphPage extends React.Component {
                     />         
                 </CardContent>
               </StyledCard>
-              {/* <DynamicSpacer />
-              <StyledCard height='auto'>
-                <CardHeader 
-                  title="Healthgraph Dashboard" 
-                  subheader="August 17th, 2019" 
-                  style={{fontSize: '100%'}} />
-                <CardContent style={{fontSize: '100%'}}>
-                  <Grid item md={6} >
-                    <CardHeader title="Immunizations" style={{fontSize: '100%'}} />
-                    <ImmunizationsTable 
-                      data={ this.data.ccd.immunizations } 
-                      hidePatientName={this.data.hidePatientName}
-                      displayDates={true} 
-                      hideCheckboxes={this.data.hideToggles}
-                      hideIdentifier={this.data.hideIdentifiers}
-                      hidePatient={this.data.hidePatientName}
-                      hidePerformer={true}
-                      hideActionIcons={this.data.hideActionIcons}
-                    />
-                    <br />
-                    <CardHeader title="Medication Statements" style={{fontSize: '100%'}} />
-                    <MedicationStatementsTable
-                      data={ this.data.ccd.medicationStatements } 
-                      hidePatientName={this.data.hidePatientName}
-                      hidePrescriberName={true}
-                      displayDates={true} 
-                      hideCheckboxes={this.data.hideToggles}
-                      hideActionIcons={this.data.hideActionIcons}                  
-                    />
-                    <br />
-                    <CardHeader title="Observations" style={{fontSize: '100%'}} />
-                    <ObservationsTable
-                      observations={ this.data.ccd.observations } 
-                      hideBarcodes={true}
-                      hideValue={true}
-                      hideComparator={true}
-                      hideSubjects={true}
-                      hidePatientName={this.data.hidePatientName}
-                      multiline={true}
-                      query={this.data.query}
-                      hideCheckboxes={this.data.hideToggles}
-                      hideActionIcons={this.data.hideActionIcons}
-                    />
-                  </Grid> 
-                </CardContent>
-              </StyledCard> */}
+              
             </Grid>
           </Grid>       
         </PageCanvas>
-      // </div>
     );
   }
 

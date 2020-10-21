@@ -1,7 +1,6 @@
 import React from 'react';
 import HealthgraphPage from './client/HealthgraphPage';
 
-import {androidRadioButtonOn} from 'react-icons-kit/ionicons/androidRadioButtonOn'
 
 
 import { 

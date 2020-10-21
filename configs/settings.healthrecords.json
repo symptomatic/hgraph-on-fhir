@@ -73,14 +73,20 @@
       },
       "sidebar": {
         "menuItems": {
-          "Index": false,
-          "Healthlog": false,
-          "GettingStarted": false,
-          "DataManagement": true,
-          "FhirResources": true,
-          "Theming": false,
+          "HomePage": false,
+          "FhirResources": false,
           "DynamicModules": true,
-          "AdminSidebarElements": true
+          "SidebarWorkflows": true,
+          "Theme": false,
+          "ConstructionZone": false,
+          "Navbars": true,
+          "DataImport": true,
+          "DataExport": true,
+          "HealthRecords": true,
+          "Login": {
+            "availability": "web"
+          },
+          "Registration": true
         },
         "hidden": [
           "/allergies",
@@ -88,6 +94,8 @@
           "/biometrics-dashboard",
           "/body-mass-index",
           "/communications",
+          "/communication-requests",
+          "/communication-responses",
           "/bundles",
           "/careplan",
           "/careplans",
@@ -100,6 +108,7 @@
           "/diagnostic-reports",
           "/endpoints",
           "/example-route",
+          "/explanation-of-benefits",
           "/goals",
           "/hello-world",
           "/imaging-studies",
@@ -107,9 +116,11 @@
           "/import-data",
           "/export-data",
           "/locations",
+          "/lists",
           "/medications",
           "/medication-orders",
           "/medication-statements",
+          "/message-headers",
           "/organizations",
           "/observations",
           "/patients",
@@ -118,11 +129,21 @@
           "/practitioners",
           "/risk-assessments",
           "/questionnaires",
+          "/questionnaire-responses",
           "/subscriptions",
           "/workqueue",
           "/vitals-tracking"
         ]
       },
+      "hiddenWorkflow": [
+        "/patient-quickchart",
+        "/bulk-data-downloader",
+        "/bulk-data-launcher",
+        "/data-pipelines",
+        "/data-import",
+        "/data-export",
+        "/data-management"
+      ],
       "adminHidden":  [
         "/allergies",
         "/communications",
