@@ -1,8 +1,8 @@
 Package.describe({
-    name: 'symptomatic:healthgraph-on-fhir',
+    name: 'symptomatic:hgraph-on-fhir',
     version: '0.2.3',
     summary: 'PatientInsight - Accreditation Utility (Cardiac)',
-    git: 'https://github.com/symptomatic/healthgraph  ',
+    git: 'https://github.com/symptomatic/hgraph-on-fhir  ',
     documentation: 'README.md'
 });
   
@@ -31,8 +31,6 @@ Package.onUse(function(api) {
     api.addFiles('lib/Methods.js', ['client', 'server']);
     api.addFiles('server/rest.js', 'server');
     
-
-    api.addFiles('assets/asclepius.png', "client", {isAsset: true});    
     api.mainModule('index.jsx', 'client');
 });
 

@@ -1,6 +1,6 @@
 {
   "public": {
-    "title": "Healthgraph",
+    "title": "hGraph",
     "secondaryTitle": " on FHIR",
     "theme": {
       "showVideoBackground": false,
@@ -45,6 +45,7 @@
       "barcodes": true,
       "hexgridMenu": false,
       "nfcOrbital": false,
+      "showPatientNameInHeader": true,
       "notificationMenu": false,
       "searchbarVisible": true,
       "prominantHeader": true,
@@ -90,6 +91,7 @@
         },
         "hidden": [
           "/allergies",
+          "/allergy-intolerances",
           "/audit-events",
           "/biometrics-dashboard",
           "/body-mass-index",
@@ -102,11 +104,8 @@
           "/consents",
           "/contracts",
           "/claims",
-          "/devices",
-          "/diagnostic-reports",
           "/endpoints",
           "/example-route",
-          "/explanation-of-benefits",
           "/goals",
           "/hello-world",
           "/imaging-studies",
@@ -115,16 +114,22 @@
           "/export-data",
           "/locations",
           "/lists",
+          "/measures",
+          "/measure-reports",
           "/medication-orders",
+          "/medication-statements",
           "/message-headers",
+          "/organizations",
           "/persons",
+          "/practitioners",
           "/risk-assessments",
           "/questionnaires",
           "/questionnaire-responses",
           "/subscriptions",
           "/tasks",
           "/workqueue",
-          "/vitals-tracking"
+          "/vitals-tracking",
+          "/valuesets"
         ]
       },
       "hiddenWorkflow": [

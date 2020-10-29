@@ -1,6 +1,6 @@
 {
   "public": {
-    "title": "Healthgraph",
+    "title": "hGraph",
     "secondaryTitle": " on FHIR",
     "theme": {
       "showVideoBackground": false,
