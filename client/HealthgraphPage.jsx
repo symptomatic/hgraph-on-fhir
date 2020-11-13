@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ReactMeteorData } from 'meteor/react-meteor-data';
+import { ReactMeteorData, useTracker } from 'meteor/react-meteor-data';
 import ReactMixin from 'react-mixin';
 import { browserHistory } from 'react-router';
 
@@ -586,6 +586,9 @@ export class HealthgraphPage extends React.Component {
     let paddingWidth = 84;
     if(Meteor.isCordova){
       paddingWidth = 20;
+    }
+    if(window.innerWidth > 768){
+      paddingWidth = 104;
     }
 
     let cardWidth = window.innerWidth - paddingWidth;
