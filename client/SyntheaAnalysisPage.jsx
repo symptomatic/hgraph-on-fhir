@@ -1,7 +1,6 @@
 
 import React from 'react';
-import { ReactMeteorData, useTracker } from 'meteor/react-meteor-data';
-import ReactMixin from 'react-mixin';
+import { useTracker } from '@ledgy/react-meteor-data';
 import { browserHistory } from 'react-router';
 
 import { get, has } from 'lodash';
@@ -178,7 +177,7 @@ const hGraphConvert = (gender, metric, data) => {
 Session.setDefault('hideToggles', true);
 Session.setDefault('systemOfMeasurement', 'imperial');
 
-export class SyntheaAnalysisPage extends React.Component {
+export class hGraphCollectionSummary extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -588,7 +587,7 @@ export class SyntheaAnalysisPage extends React.Component {
       }  
     //}
 
-    console.log("SyntheaAnalysisPage[data]", data);
+    console.log("hGraphCollectionSummary[data]", data);
     return data;
   }
 
@@ -640,7 +639,7 @@ export class SyntheaAnalysisPage extends React.Component {
 
 
     return (
-      <PageCanvas id='syntheaAnalysisPage' headerHeight={headerHeight} paddingLeft={paddingWidth} paddingRight={paddingWidth} >
+      <PageCanvas id='hGraphCollectionSummary' headerHeight={headerHeight} paddingLeft={paddingWidth} paddingRight={paddingWidth} >
         <Grid container style={{marginTop: '40px', marginBottom: '80px'}}>            
           <Grid item md={6}>
             <StyledCard margins={20} >
@@ -716,6 +715,5 @@ export class SyntheaAnalysisPage extends React.Component {
 }
 
 
-ReactMixin(SyntheaAnalysisPage.prototype, ReactMeteorData);
 
-export default SyntheaAnalysisPage;
+export default hGraphCollectionSummary;

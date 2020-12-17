@@ -11,7 +11,7 @@ Package.onUse(function(api) {
     
     api.use('meteor-base@1.4.0');
     api.use('ecmascript@0.13.0');
-    api.use('react-meteor-data@0.2.15');
+    api.use('react-meteor-data@2.1.2');
     api.use('session');
     api.use('mongo');
     api.use('http');

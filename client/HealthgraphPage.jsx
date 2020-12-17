@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ReactMeteorData, useTracker } from 'meteor/react-meteor-data';
+import { useTracker } from '@ledgy/react-meteor-data';
 import ReactMixin from 'react-mixin';
 import { browserHistory } from 'react-router';
 
@@ -664,6 +664,5 @@ export class HealthgraphPage extends React.Component {
 }
 
 
-ReactMixin(HealthgraphPage.prototype, ReactMeteorData);
 
 export default HealthgraphPage;
