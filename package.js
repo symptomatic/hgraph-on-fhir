@@ -1,6 +1,6 @@
 Package.describe({
     name: 'symptomatic:hgraph-on-fhir',
-    version: '0.2.4',
+    version: '0.3.0',
     summary: 'PatientInsight - Accreditation Utility (Cardiac)',
     git: 'https://github.com/symptomatic/hgraph-on-fhir  ',
     documentation: 'README.md'
@@ -24,7 +24,7 @@ Package.onUse(function(api) {
      
     api.use('aldeed:collection2@3.0.0');
     api.use('simple:json-routes@2.1.0');
-    api.use('clinical:hl7-fhir-data-infrastructure@6.7.1');
+    api.use('clinical:hl7-fhir-data-infrastructure');
 
 
     api.addFiles('lib/Collections.js', ['client', 'server']);
