@@ -18,7 +18,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Button from '@material-ui/core/Container';
 
 import HGraph from 'hgraph-react'; // symlinked with 'yarn link' from project root.
-import { PageCanvas, StyledCard } from 'material-fhir-ui';
+import { PageCanvas, StyledCard } from 'fhir-starter';
 
 
 import { 
