@@ -64,7 +64,7 @@ let sampleData = [
     "metric": "bloodPressureSystolic",
     "label": "Systolic blood pressure",
     "healthMin": 100,
-    "healthMax": 140,
+    "healthyMax": 140,
     "absoluteMin": 80,
     "absoluteMax": 200,
     "value": 120
@@ -73,7 +73,7 @@ let sampleData = [
     "metric": "bloodPressureDiastolic",
     "label": "Diastolic blood pressure",
     "healthMin": 60,
-    "healthMax": 100,
+    "healthyMax": 100,
     "absoluteMin": 0,
     "absoluteMax": 200,
     "value": 80
@@ -82,7 +82,7 @@ let sampleData = [
     "metric": "weight",
     "label": "Body weight Measured",
     "healthMin": 120,
-    "healthMax": 200,
+    "healthyMax": 200,
     "absoluteMin": 80,
     "absoluteMax": 240,
     "value": 140
@@ -91,7 +91,7 @@ let sampleData = [
     "metric": "pulse",
     "label": "Heart rate",
     "healthMin": 50,
-    "healthMax": 80,
+    "healthyMax": 80,
     "absoluteMin": 30,
     "absoluteMax": 120,
     "value": 60
@@ -100,7 +100,7 @@ let sampleData = [
     "metric": "bloodOxygenation",
     "label": "Oxygen saturation in Blood",
     "healthMin": 90,
-    "healthMax": 100,
+    "healthyMax": 100,
     "absoluteMin": 70,
     "absoluteMax": 100,
     "value": 98
@@ -109,7 +109,7 @@ let sampleData = [
     "metric": "temperature",
     "label": "Body temperature",
     "healthMin": 96,
-    "healthMax": 99,
+    "healthyMax": 99,
     "absoluteMin": 94,
     "absoluteMax": 106,
     "value": 98.6
