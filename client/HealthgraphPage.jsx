@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { useTracker } from '@ledgy/react-meteor-data';
-import ReactMixin from 'react-mixin';
 import { browserHistory } from 'react-router';
 
 import { get, has } from 'lodash';
@@ -116,39 +115,7 @@ let sampleData = [
     "absoluteMin": 94,
     "absoluteMax": 106,
     "value": 98.6
-  },
-  // {
-  //   "metric": "alcoholUse",
-  //   "value": 0
-  // },
-  // {
-  //   "metric": "nicotineUse",
-  //   "value": 0
-  // },
-  // {
-  //   "metric": "painLevel",
-  //   "value": 0
-  // },
-  // {
-  //   "metric": "waistCircumference",
-  //   "value": 0
-  // },
-  // {
-  //   "metric": "exercise",
-  //   "value": 0
-  // },
-  // {
-  //   "metric": "sleep",
-  //   "value": 0
-  // },
-  // {
-  //   "metric": "happiness",
-  //   "value": 0
-  // },
-  // {
-  //   "metric": "glucose",
-  //   "value": 0
-  // }
+  }
 ];
 
 //==========================================================================================
