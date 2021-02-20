@@ -1,6 +1,6 @@
 Package.describe({
     name: 'symptomatic:hgraph-on-fhir',
-    version: '0.3.0',
+    version: '0.3.1',
     summary: 'PatientInsight - Accreditation Utility (Cardiac)',
     git: 'https://github.com/symptomatic/hgraph-on-fhir  ',
     documentation: 'README.md'
