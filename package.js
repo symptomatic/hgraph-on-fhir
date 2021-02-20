@@ -14,7 +14,7 @@ Package.onUse(function(api) {
     api.use('ddp@1.4.0');
     api.use('livedata@1.0.18');
     api.use('es5-shim@4.8.0');
-    api.use('ecmascript@0.13.0');
+    api.use('ecmascript@0.15.0');
 
     api.use('react-meteor-data@2.1.2');
     api.use('session');
