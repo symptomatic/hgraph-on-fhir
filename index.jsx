@@ -5,7 +5,8 @@ import SyntheaAnalysisPage from './client/SyntheaAnalysisPage';
 
 
 import { 
-  HealthGraphFooterButtons
+  HealthGraphFooterButtons,
+  TurntableFooterButtons
 } from './client/HealthGraphFooterButtons';
 
 
@@ -36,6 +37,9 @@ let FooterButtons = [{
 }, {
   pathname: '/',
   component: <HealthGraphFooterButtons />
+}, {
+  pathname: '/turntable-hgraph',
+  component: <TurntableFooterButtons />
 }];
 
 let MainPage = HealthgraphPage;

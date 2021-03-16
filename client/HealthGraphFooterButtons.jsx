@@ -106,3 +106,45 @@ export function HealthGraphFooterButtons(props){
 
 
 
+
+//============================================================================================================================
+// FETCH
+
+
+export function TurntableFooterButtons(props){
+  const buttonClasses = buttonStyles();
+
+  console.log('TurntableFooterButtons')
+
+  function togglePulse(){
+    console.log('TurntableFooterButtons.togglePulse()');
+
+    if(Session.equals('lastKnownPulse', 0)){
+      Session.set('lastKnownPulse', 60);  
+    } else if (Session.get('lastKnownPulse') > 0){
+      Session.set('lastKnownPulse', 0);  
+    }
+  }
+  function toggleRespiration(){
+    console.log('TurntableFooterButtons.toggleRespiration()');
+
+    if(Session.equals('lastKnownRespiration', 0)){
+      Session.set('lastKnownRespiration', 60);  
+    } else if (Session.get('lastKnownRespiration') > 0){
+      Session.set('lastKnownRespiration', 0);  
+    }
+  }
+  return (
+    <MuiThemeProvider theme={muiTheme} >
+      <Button onClick={ togglePulse.bind(this) } className={ buttonClasses.west_button }>
+        Pulse
+      </Button>      
+      <Button onClick={ toggleRespiration.bind(this) } className={ buttonClasses.east_button }>
+        Respiration
+      </Button>      
+    </MuiThemeProvider>
+  );
+}
+
+
+
