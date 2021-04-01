@@ -37,9 +37,6 @@ let FooterButtons = [{
 }, {
   pathname: '/',
   component: <HealthGraphFooterButtons />
-}, {
-  pathname: '/turntable-hgraph',
-  component: <TurntableFooterButtons />
 }];
 
 let MainPage = HealthgraphPage;
